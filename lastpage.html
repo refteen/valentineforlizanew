@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЦВЕТОЧКИ🌺</title>
+    <link rel="stylesheet" href="styles/flower.css" />
+    <link rel="stylesheet" href="styles/main.css" />
+    <style>
+        .bg_heart {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Поместить сердечки на второй план */
+        }
+        .heart {
+            position: absolute;
+            top: -50%;
+            transform: rotate(-45deg);
+        }
+        .heart:before,
+        .heart:after {
+            position: absolute;
+            display: block;
+            content: "";
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            border-radius: 100%;
+        }
+        .heart:before {
+            top: -50%;
+            left: 0;
+        }
+        .heart:after {
+            top: 0;
+            right: -50%;
+        }
+        @keyframes love {
+            0% {
+                top: 110%;
+            }
+        }
+
+        .next-button {
+            display: none;
+            position: fixed;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 30px;
+            background-color: #ff4d6d;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.2em;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .next-button:hover {
+            background-color: #ff3357;
+            transform: translateX(-50%) scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div id="thankyou"><b>Эти цветочки тебеее!!</b></div>
+    <div class="flower">
+        <div class="f-wrapper">
+            <div class="flower__line"></div>
+            <div class="f">
+                <div class="flower__leaf flower__leaf--1"></div>
+                <div class="flower__leaf flower__leaf--2"></div>
+                <div class="flower__leaf flower__leaf--3"></div>
+                <div class="flower__leaf flower__leaf--4"></div>
+                <div class="flower__leaf flower__leaf--5"></div>
+                <div class="flower__leaf flower__leaf--6"></div>
+                <div class="flower__leaf flower__leaf--7"></div>
+                <div class="flower__leaf flower__leaf--8 flower__fall-down--yellow"></div>
+            </div>
+        </div>
+        <div class="f-wrapper f-wrapper--2">
+            <div class="flower__line"></div>
+            <div class="f">
+                <div class="flower__leaf flower__leaf--1"></div>
+                <div class="flower__leaf flower__leaf--2"></div>
+                <div class="flower__leaf flower__leaf--3"></div>
+                <div class="flower__leaf flower__leaf--4"></div>
+                <div class="flower__leaf flower__leaf--5"></div>
+                <div class="flower__leaf flower__leaf--6"></div>
+                <div class="flower__leaf flower__leaf--7"></div>
+                <div class="flower__leaf flower__leaf--8 flower__fall-down--pink"></div>
+            </div>
+        </div>
+        <div class="f-wrapper f-wrapper--3">
+            <div class="flower__line"></div>
+            <div class="f">
+                <div class="flower__leaf flower__leaf--1"></div>
+                <div class="flower__leaf flower__leaf--2"></div>
+                <div class="flower__leaf flower__leaf--3"></div>
+                <div class="flower__leaf flower__leaf--4"></div>
+                <div class="flower__leaf flower__leaf--5"></div>
+                <div class="flower__leaf flower__leaf--6"></div>
+                <div class="flower__leaf flower__leaf--7"></div>
+                <div class="flower__leaf flower__leaf--8 flower__fall-down--purple"></div>
+            </div>
+        </div>
+        <div class="flower__glass"></div>
+    </div>
+
+    <!-- Кнопка для перехода на следующую страницу -->
+    <a href="redheart.html" class="next-button">^W^</a>
+
+    <!-- Музыка -->
+    <audio id="backgroundMusic" autoplay loop>
+        <source src="assets/blue.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Летающие сердечки -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Убедитесь, что у вас есть элемент с классом bg_heart в HTML
+        if (!$('.bg_heart').length) {
+            $('body').append('<div class="bg_heart"></div>');
+        }
+
+        // Запуск функции для создания и анимации сердечек
+        $(document).ready(function() {
+            var love = setInterval(function() {
+                var r_num = Math.floor(Math.random() * 40) + 1;
+                var r_size = Math.floor(Math.random() * 65) + 10;
+                var r_left = Math.floor(Math.random() * 100) + 1;
+                var r_top = Math.floor(Math.random() * 100) + 1; // Случайная позиция сверху
+                var r_bg = Math.floor(Math.random() * 25) + 100;
+                var r_time = Math.floor(Math.random() * 5) + 5;
+                $('.bg_heart').append("<div class='heart' style='width:" + r_size + "px;height:" + r_size + "px;left:" + r_left + "%;top:" + r_top + "%;background:rgba(255," + (r_bg - 25) + "," + r_bg + ",1);animation:love " + r_time + "s ease'></div>");
+                $('.bg_heart').append("<div class='heart' style='width:" + (r_size - 10) + "px;height:" + (r_size - 10) + "px;left:" + (r_left + r_num) + "%;top:" + (r_top + r_num) + "%;background:rgba(255," + (r_bg - 25) + "," + (r_bg + 25) + ",1);animation:love " + (r_time + 5) + "s ease'></div>");
+                $('.heart').each(function() {
+                    var top = parseFloat($(this).css("top"));
+                    var width = parseFloat($(this).css("width"));
+                    if (top <= -100 || width >= 150) {
+                        $(this).remove();
+                    }
+                });
+            }, 500);
+
+            // Восстановление состояния воспроизведения музыки
+            const music = document.getElementById('backgroundMusic');
+            const isMusicPlaying = localStorage.getItem('musicPlaying') === 'true';
+            const musicCurrentTime = localStorage.getItem('musicCurrentTime') || 0;
+            if (isMusicPlaying) {
+                music.currentTime = parseFloat(musicCurrentTime);
+                music.play().catch(error => console.log('Playback failed', error));
+            }
+            music.addEventListener('play', () => {
+                localStorage.setItem('musicPlaying', 'true');
+            });
+            music.addEventListener('pause', () => {
+                localStorage.setItem('musicPlaying', 'false');
+            });
+            setInterval(() => {
+                localStorage.setItem('musicCurrentTime', music.currentTime);
+            }, 1000);
+
+            // Показать кнопку после определенного времени или события
+            setTimeout(function() {
+                $('.next-button').show();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
