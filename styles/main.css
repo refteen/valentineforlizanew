@@ -6,7 +6,9 @@ html, body {
   -ms-user-select: none;
   user-select: none;
 }
-
+body:not([data-page="lastpage"]) .bg_heart {
+  background-color: #000000; 
+}
 .bg_heart {
   position: relative;
   top: 0;
